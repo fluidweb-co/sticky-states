@@ -35,7 +35,7 @@
 		thresholdAttribute: 'data-sticky-threshold',
 		staticAtEndAttribute: 'data-sticky-static-at-end',
 		containerAttribute: 'data-sticky-container',
-		
+
 		position: 'top', // Accepted values: `top`, `bottom`
 		threshold: 0,
 	};
@@ -251,7 +251,7 @@
 		manager.isActivated = true;
 		manager.stickyElement.classList.add( manager.settings.isActivatedClass );
 		
-		// Add slider manager to public methods
+		// Add manager to public methods
 		_publicMethods.managers.push( manager );
 	}
 
