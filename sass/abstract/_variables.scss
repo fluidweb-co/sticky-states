@@ -1,0 +1,44 @@
+// ----------------------------------------
+// GRID SYSTEM
+
+// Breakpoints
+$bp-larger-than-mobile:                     'min-width: 400px' !default;
+$bp-larger-than-phablet:                    'min-width: 550px' !default;
+$bp-larger-than-tablet:                     'min-width: 750px' !default;
+$bp-larger-than-desktop:                    'min-width: 1000px' !default;
+$bp-larger-than-desktop-medium:             'min-width: 1280px' !default;
+$bp-larger-than-desktop-large:              'min-width: 1500px' !default;
+$bp-larger-than-desktop-extra-large:        'min-width: 2000px' !default;
+
+$bp-smaller-than-mobile:                    'max-width: 399px' !default;
+$bp-smaller-than-phablet:                   'max-width: 549px' !default;
+$bp-smaller-than-tablet:                    'max-width: 749px' !default;
+$bp-smaller-than-desktop:                   'max-width: 999px' !default;
+$bp-smaller-than-desktop-medium:            'max-width: 1279px' !default;
+$bp-smaller-than-desktop-large:             'max-width: 1499px' !default;
+$bp-smaller-than-desktop-extra-large:       'max-width: 1999px' !default;
+
+// END - GRID SYSTEM
+// ----------------------------------------
+
+
+
+
+
+// ----------------------------------------
+// Z-INDEX LEVELS
+
+$z-layers: (
+	'above-all':        100000,
+	'modal':            5000,
+	'header-element':   2000,
+	'offside-element':  1500,
+	'sticky-element':   300,
+	'float-element':    200,
+	'above':            10,
+	'default':          1,
+	'below':            -1
+) !default;
+
+// END - Z-INDEX LEVELS
+// ----------------------------------------

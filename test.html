@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sticky States Test</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+	
+	<link rel='stylesheet' id='sticky-states' href='dist/sticky-states.min.css' type='text/css' media='all' />
+	<script type="text/javascript" src="dist/sticky-states.min.js"></script>
+	
+	<script type="text/javascript">
+		var log = function( message ) {
+			var debugContainer = document.querySelector( '.debug-container' );
+			if ( debugContainer ) {
+				var newMessage = document.createElement( 'p' );
+				newMessage.innerText = message;
+				debugContainer.appendChild( newMessage );
+			}
+		}
+
+		var initStickyStates = function() {
+			if ( window.StickyStates ) {
+				StickyStates.init();
+				log( 'Sticky States initialized.' );
+			}
+			else {
+				log( 'Sticky States isn\'t loaded.' );
+			}
+		}
+
+		window.addEventListener( "DOMContentLoaded", function () { log( 'DOM Content loaded' ); } );
+		window.addEventListener( "DOMContentLoaded", function () { initStickyStates(); } );
+		window.addEventListener( "load", function () { log( 'Page loaded' ); } );
+	
+	</script>
+
+	<style type="text/css">
+		* {
+			box-sizing: border-box;
+		}
+
+		hr {
+			margin-top: 30px;
+			margin-bottom: 30px;
+		}
+
+		.content {
+			margin: 0 auto;
+			width: 280px;
+		}
+		
+		.sticky-state__section-content {
+			padding: 100px 0;
+		}
+
+		[data-sticky-states] {
+			background-color: #f9f9f9;
+		}
+
+		[data-sticky-states] [data-sticky-states-inner] {
+			padding: 10px;
+			background-color: #f3f3f3;
+		}
+
+		[data-sticky-states].is-sticky [data-sticky-states-inner] {
+			background-color: rgba( 255, 255, 0, .9 );
+		}
+
+		.sticky-actions {
+			text-align: center;
+		}
+
+		.sticky-action {
+			margin: 0 5px;
+		}
+		
+	</style>
+
+</head>
+<body>
+	<div class="content">
+
+
+
+		<hr/>
+
+
+
+		<h2>Sticky at the top</h2>
+		
+		<p>The actions container below should get sticky to the TOP as soon as it reaches to top edge of the viewport, and should return to the normal state, and therefore not visible, as soon as the parent element (the container section with paragraphs and the some spacing) is scrolled past the top edge of the view port. In other words, the sticky element should be visible while it's parent element (or the container element) is in the viewport.</p>
+		
+		<section class="sticky-state__section">
+			<div class="sticky-actions" data-sticky-states>
+				<div class="sticky-states__inner" data-sticky-states-inner>
+					<span class="sticky-action">action 1</span>
+				</div>
+			</div>
+
+			<div class="sticky-state__section-content">
+				<p>Cupcake ipsum dolor sit amet brownie. Tootsie roll lollipop chocolate cake soufflé sweet roll gingerbread gummi bears dragée. Tootsie roll soufflé lemon drops. Cheesecake dragée jujubes cake jelly cookie caramels marzipan ice cream. Pastry jelly candy pastry halvah. Brownie tiramisu halvah. Pie gummi bears topping marzipan gummi bears jelly-o bonbon jelly-o jujubes. Croissant pudding liquorice lollipop jelly-o sweet chocolate cake caramels marzipan. Chocolate halvah marzipan wafer dessert toffee pastry croissant. Dragée ice cream lemon drops chocolate cake toffee fruitcake caramels sesame snaps carrot cake. Powder powder marzipan muffin cake danish pie. Lemon drops sesame snaps chocolate muffin apple pie fruitcake chocolate cake marzipan topping. Jelly beans brownie cake jelly beans tiramisu lemon drops chocolate carrot cake sugar plum.</p>
+				<p>Cupcake ipsum dolor sit amet brownie. Tootsie roll lollipop chocolate cake soufflé sweet roll gingerbread gummi bears dragée. Tootsie roll soufflé lemon drops. Cheesecake dragée jujubes cake jelly cookie caramels marzipan ice cream. Pastry jelly candy pastry halvah. Brownie tiramisu halvah. Pie gummi bears topping marzipan gummi bears jelly-o bonbon jelly-o jujubes. Croissant pudding liquorice lollipop jelly-o sweet chocolate cake caramels marzipan. Chocolate halvah marzipan wafer dessert toffee pastry croissant. Dragée ice cream lemon drops chocolate cake toffee fruitcake caramels sesame snaps carrot cake. Powder powder marzipan muffin cake danish pie. Lemon drops sesame snaps chocolate muffin apple pie fruitcake chocolate cake marzipan topping. Jelly beans brownie cake jelly beans tiramisu lemon drops chocolate carrot cake sugar plum.</p>
+			</div>
+		</section>
+
+
+
+		<hr/>
+
+
+
+		<h2>Sticky at the top, also visible past the container element</h2>
+		
+		<p>The actions container below should get sticky to the TOP as soon as it reaches to top edge of the viewport, and then stay sticky below that scroll position.</p>
+		
+		<section class="sticky-state__section">
+			<div class="sticky-actions" data-sticky-states data-sticky-container="body">
+				<div class="sticky-states__inner" data-sticky-states-inner>
+					<span class="sticky-action">action 1</span>
+					<span class="sticky-action">action 2</span>
+				</div>
+			</div>
+
+			<div class="sticky-state__section-content">
+				<p>Cupcake ipsum dolor sit amet brownie. Tootsie roll lollipop chocolate cake soufflé sweet roll gingerbread gummi bears dragée. Tootsie roll soufflé lemon drops. Cheesecake dragée jujubes cake jelly cookie caramels marzipan ice cream. Pastry jelly candy pastry halvah. Brownie tiramisu halvah. Pie gummi bears topping marzipan gummi bears jelly-o bonbon jelly-o jujubes. Croissant pudding liquorice lollipop jelly-o sweet chocolate cake caramels marzipan. Chocolate halvah marzipan wafer dessert toffee pastry croissant. Dragée ice cream lemon drops chocolate cake toffee fruitcake caramels sesame snaps carrot cake. Powder powder marzipan muffin cake danish pie. Lemon drops sesame snaps chocolate muffin apple pie fruitcake chocolate cake marzipan topping. Jelly beans brownie cake jelly beans tiramisu lemon drops chocolate carrot cake sugar plum.</p>
+				<p>Cupcake ipsum dolor sit amet brownie. Tootsie roll lollipop chocolate cake soufflé sweet roll gingerbread gummi bears dragée. Tootsie roll soufflé lemon drops. Cheesecake dragée jujubes cake jelly cookie caramels marzipan ice cream. Pastry jelly candy pastry halvah. Brownie tiramisu halvah. Pie gummi bears topping marzipan gummi bears jelly-o bonbon jelly-o jujubes. Croissant pudding liquorice lollipop jelly-o sweet chocolate cake caramels marzipan. Chocolate halvah marzipan wafer dessert toffee pastry croissant. Dragée ice cream lemon drops chocolate cake toffee fruitcake caramels sesame snaps carrot cake. Powder powder marzipan muffin cake danish pie. Lemon drops sesame snaps chocolate muffin apple pie fruitcake chocolate cake marzipan topping. Jelly beans brownie cake jelly beans tiramisu lemon drops chocolate carrot cake sugar plum.</p>
+			</div>
+		</section>
+
+
+
+		<hr/>
+
+
+
+		<h2 class="sticky-bottom__heading-marker">Sticky at the bottom, from the start of the page until the element's normal position</h2>
+
+		<p>The actions container below should get sticky to the BOTTOM from the start of the page, and then return to its normal position in the flow as soon as its bottom edge reaches the bottom of its normal position.</p>
+
+		<section class="sticky-state__section">
+			<div class="sticky-actions" data-sticky-states data-sticky-position="bottom" data-sticky-threshold="0" data-sticky-static-at-end>
+				<div class="sticky-states__inner" data-sticky-states-inner>
+					<span class="sticky-action">action 1</span>
+					<span class="sticky-action">action 2</span>
+					<span class="sticky-action">action 3</span>
+				</div>
+			</div>
+
+			<div class="sticky-state__section-content">
+				<p>Cupcake ipsum dolor sit amet brownie. Tootsie roll lollipop chocolate cake soufflé sweet roll gingerbread gummi bears dragée. Tootsie roll soufflé lemon drops. Cheesecake dragée jujubes cake jelly cookie caramels marzipan ice cream. Pastry jelly candy pastry halvah. Brownie tiramisu halvah. Pie gummi bears topping marzipan gummi bears jelly-o bonbon jelly-o jujubes. Croissant pudding liquorice lollipop jelly-o sweet chocolate cake caramels marzipan. Chocolate halvah marzipan wafer dessert toffee pastry croissant. Dragée ice cream lemon drops chocolate cake toffee fruitcake caramels sesame snaps carrot cake. Powder powder marzipan muffin cake danish pie. Lemon drops sesame snaps chocolate muffin apple pie fruitcake chocolate cake marzipan topping. Jelly beans brownie cake jelly beans tiramisu lemon drops chocolate carrot cake sugar plum.</p>
+				<p>Cupcake ipsum dolor sit amet brownie. Tootsie roll lollipop chocolate cake soufflé sweet roll gingerbread gummi bears dragée. Tootsie roll soufflé lemon drops. Cheesecake dragée jujubes cake jelly cookie caramels marzipan ice cream. Pastry jelly candy pastry halvah. Brownie tiramisu halvah. Pie gummi bears topping marzipan gummi bears jelly-o bonbon jelly-o jujubes. Croissant pudding liquorice lollipop jelly-o sweet chocolate cake caramels marzipan. Chocolate halvah marzipan wafer dessert toffee pastry croissant. Dragée ice cream lemon drops chocolate cake toffee fruitcake caramels sesame snaps carrot cake. Powder powder marzipan muffin cake danish pie. Lemon drops sesame snaps chocolate muffin apple pie fruitcake chocolate cake marzipan topping. Jelly beans brownie cake jelly beans tiramisu lemon drops chocolate carrot cake sugar plum.</p>
+			</div>
+		</section>
+
+
+
+		<hr/>
+
+
+
+		<h2>Sticky at the bottom</h2>
+
+		<p>The actions container below should get sticky to the BOTTOM from it's normal position until the end of the container element.</p>
+
+		<section class="sticky-state__section">
+			<div class="sticky-actions" data-sticky-states data-sticky-position="bottom">
+				<div class="sticky-states__inner" data-sticky-states-inner>
+					<span class="sticky-action">action 1</span>
+					<span class="sticky-action">action 2</span>
+					<span class="sticky-action">action 3</span>
+					<span class="sticky-action">action 4</span>
+				</div>
+			</div>
+
+			<div class="sticky-state__section-content">
+				<p>Cupcake ipsum dolor sit amet brownie. Tootsie roll lollipop chocolate cake soufflé sweet roll gingerbread gummi bears dragée. Tootsie roll soufflé lemon drops. Cheesecake dragée jujubes cake jelly cookie caramels marzipan ice cream. Pastry jelly candy pastry halvah. Brownie tiramisu halvah. Pie gummi bears topping marzipan gummi bears jelly-o bonbon jelly-o jujubes. Croissant pudding liquorice lollipop jelly-o sweet chocolate cake caramels marzipan. Chocolate halvah marzipan wafer dessert toffee pastry croissant. Dragée ice cream lemon drops chocolate cake toffee fruitcake caramels sesame snaps carrot cake. Powder powder marzipan muffin cake danish pie. Lemon drops sesame snaps chocolate muffin apple pie fruitcake chocolate cake marzipan topping. Jelly beans brownie cake jelly beans tiramisu lemon drops chocolate carrot cake sugar plum.</p>
+				<p>Cupcake ipsum dolor sit amet brownie. Tootsie roll lollipop chocolate cake soufflé sweet roll gingerbread gummi bears dragée. Tootsie roll soufflé lemon drops. Cheesecake dragée jujubes cake jelly cookie caramels marzipan ice cream. Pastry jelly candy pastry halvah. Brownie tiramisu halvah. Pie gummi bears topping marzipan gummi bears jelly-o bonbon jelly-o jujubes. Croissant pudding liquorice lollipop jelly-o sweet chocolate cake caramels marzipan. Chocolate halvah marzipan wafer dessert toffee pastry croissant. Dragée ice cream lemon drops chocolate cake toffee fruitcake caramels sesame snaps carrot cake. Powder powder marzipan muffin cake danish pie. Lemon drops sesame snaps chocolate muffin apple pie fruitcake chocolate cake marzipan topping. Jelly beans brownie cake jelly beans tiramisu lemon drops chocolate carrot cake sugar plum.</p>
+			</div>
+		</section>
+
+
+
+		<hr/>
+
+
+
+		<h2>Spacer section</h2>
+
+		<section class="spacer">
+			<div class="spacer-content">
+				<p>Cupcake ipsum dolor sit amet brownie. Tootsie roll lollipop chocolate cake soufflé sweet roll gingerbread gummi bears dragée. Tootsie roll soufflé lemon drops. Cheesecake dragée jujubes cake jelly cookie caramels marzipan ice cream. Pastry jelly candy pastry halvah. Brownie tiramisu halvah. Pie gummi bears topping marzipan gummi bears jelly-o bonbon jelly-o jujubes. Croissant pudding liquorice lollipop jelly-o sweet chocolate cake caramels marzipan. Chocolate halvah marzipan wafer dessert toffee pastry croissant. Dragée ice cream lemon drops chocolate cake toffee fruitcake caramels sesame snaps carrot cake. Powder powder marzipan muffin cake danish pie. Lemon drops sesame snaps chocolate muffin apple pie fruitcake chocolate cake marzipan topping. Jelly beans brownie cake jelly beans tiramisu lemon drops chocolate carrot cake sugar plum.</p>
+
+				<p>Cupcake ipsum dolor sit amet brownie. Tootsie roll lollipop chocolate cake soufflé sweet roll gingerbread gummi bears dragée. Tootsie roll soufflé lemon drops. Cheesecake dragée jujubes cake jelly cookie caramels marzipan ice cream. Pastry jelly candy pastry halvah. Brownie tiramisu halvah. Pie gummi bears topping marzipan gummi bears jelly-o bonbon jelly-o jujubes. Croissant pudding liquorice lollipop jelly-o sweet chocolate cake caramels marzipan. Chocolate halvah marzipan wafer dessert toffee pastry croissant. Dragée ice cream lemon drops chocolate cake toffee fruitcake caramels sesame snaps carrot cake. Powder powder marzipan muffin cake danish pie. Lemon drops sesame snaps chocolate muffin apple pie fruitcake chocolate cake marzipan topping. Jelly beans brownie cake jelly beans tiramisu lemon drops chocolate carrot cake sugar plum.</p>
+				
+				<p>Cupcake ipsum dolor sit amet brownie. Tootsie roll lollipop chocolate cake soufflé sweet roll gingerbread gummi bears dragée. Tootsie roll soufflé lemon drops. Cheesecake dragée jujubes cake jelly cookie caramels marzipan ice cream. Pastry jelly candy pastry halvah. Brownie tiramisu halvah. Pie gummi bears topping marzipan gummi bears jelly-o bonbon jelly-o jujubes. Croissant pudding liquorice lollipop jelly-o sweet chocolate cake caramels marzipan. Chocolate halvah marzipan wafer dessert toffee pastry croissant. Dragée ice cream lemon drops chocolate cake toffee fruitcake caramels sesame snaps carrot cake. Powder powder marzipan muffin cake danish pie. Lemon drops sesame snaps chocolate muffin apple pie fruitcake chocolate cake marzipan topping. Jelly beans brownie cake jelly beans tiramisu lemon drops chocolate carrot cake sugar plum.</p>
+			</div>
+		</section>
+
+
+
+		<hr/>
+
+
+
+		<div class="debug-container">
+		</div>
+
+	</div>
+
+</body>
+</html>
