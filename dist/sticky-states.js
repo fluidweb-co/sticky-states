@@ -119,7 +119,7 @@
 	 */
 	 _publicMethods.isStickyPosition = function( element ) {
 		// Try checking for the sticky class
-		if ( element.closest( '.' + _settings.isStickyClass ) ) { return true; }
+		if ( element.matches( '.' + _settings.isStickyClass ) ) { return true; }
 
 		// Try checking for computed styles (slower)
 		// Used for elements set to sticky position by other means other than using sticky-states
