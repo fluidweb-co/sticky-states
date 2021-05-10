@@ -20,7 +20,7 @@
 	var _publicMethods = {
 		managers: [],
 	};
-	var _settings = { };
+	var _settings = {};
 	var _defaults = {
 		elementSelector: '[data-sticky-states]',
 		innerElementSelector: '[data-sticky-states-inner]',
@@ -198,7 +198,7 @@
 		var windowHeight = Math.max( document.documentElement.clientHeight, window.innerHeight || 0 );
 		var thresholdAttrValue = manager.stickyElement.getAttribute( manager.settings.thresholdAttribute );
 		var elementRect = manager.stickyElement.getBoundingClientRect();
-		var elementOffset = getOffset( manager.stickyElement.parentNode ).top;
+		var elementOffset = getOffset( manager.stickyElement ).top;
 		
 		// Threshold
 		manager.settings.threshold = isNaN( parseInt( thresholdAttrValue ) ) ? elementOffset : parseInt( thresholdAttrValue );
