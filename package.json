@@ -1,6 +1,6 @@
 {
   "name": "sticky-states",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Makes elements sticky to the viewport (position fixed) based on the scroll position.",
   "keywords": [
     "position fixed",
