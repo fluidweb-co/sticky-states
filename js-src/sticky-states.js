@@ -20,7 +20,7 @@
 	var _publicMethods = {
 		managers: [],
 	};
-	var _settings = { };
+	var _settings = {};
 	var _defaults = {
 		elementSelector: '[data-sticky-states]',
 		innerElementSelector: '[data-sticky-states-inner]',
