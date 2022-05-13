@@ -39,6 +39,8 @@
 
 		position: 'top', // Accepted values: `top`, `bottom`
 		threshold: 0,
+
+		refreshRate: 50,
 	};
 	var _resizeObserver;
 
@@ -260,7 +262,12 @@
 
 		// Iterate sticky elements
 		for ( var i = 0; i < _publicMethods.managers.length; i++ ) {
-			var manager = _publicMethods.managers[i];
+			var manager = _publicMethods.managers[ i ];
+			var containerStyles = window.getComputedStyle( manager.containerElement );
+			var stickyStyles = window.getComputedStyle( manager.stickyElement );
+			var containerHeight = parseInt( containerStyles.height.replace( 'px' ) );
+        	var stickyHeight = parseInt( stickyStyles.height.replace( 'px' ) );
+			var isStickyShorterThanContainer = stickyHeight < containerHeight;
 			var isSticky = currentScrollPosition >= manager.settings.threshold;
 			var relativeHeight = 0;
 			var isEndThreshold = currentScrollPosition >= manager.settings.endThreshold;
@@ -274,22 +281,20 @@
 			}
 
 			// Sticky
-			if ( isSticky && ! isEndThreshold ) {
-				var stickyWidth = window.getComputedStyle( manager.innerElement ).width;
-				var containerHeight = window.getComputedStyle( manager.stickyElement ).height;
+			if ( isSticky && isStickyShorterThanContainer && ! isEndThreshold ) {
+				var stickyInnerWidth = window.getComputedStyle( manager.innerElement ).width;
 				manager.innerElement.style.top = relativeHeight > 0 ? relativeHeight + 'px' : '';
-				manager.innerElement.style.width = stickyWidth; // variable already has unit `px`
-				manager.stickyElement.style.height = containerHeight; // variable already has unit `px`
+				manager.innerElement.style.width = stickyInnerWidth; // variable already has unit `px`
+				manager.stickyElement.style.height = stickyHeight + 'px';
 				manager.stickyElement.style.position = '';
 				manager.stickyElement.classList.add( manager.settings.isStickyClass, ( manager.settings.position == 'top' ? manager.settings.isStickyTopClass : manager.settings.isStickyBottomClass ) );
 				manager.stickyElement.classList.remove( manager.settings.isEndPositionClass );
 			}
 			// Absolute ( at end position )
-			else if ( isEndThreshold && ! isStaticAtEnd ) {
-				var containerHeight = parseInt( window.getComputedStyle( manager.containerElement ).height.replace( 'px' ) );
-				var elementHeight = parseInt( window.getComputedStyle( manager.stickyElement ).height.replace( 'px' ) );
+			else if ( isEndThreshold && isStickyShorterThanContainer && ! isStaticAtEnd ) {
 				var elementOffsetToContainer = getOffsetTop( manager.stickyElement ) - getOffsetTop( manager.containerElement );
-				manager.innerElement.style.top = ( containerHeight - elementHeight - elementOffsetToContainer ) + 'px';
+				manager.innerElement.style.top = ( containerHeight - stickyHeight - elementOffsetToContainer ) + 'px';
+				manager.stickyElement.style.height = stickyHeight + 'px';
 				manager.stickyElement.classList.remove( manager.settings.isStickyClass, manager.settings.isStickyTopClass, manager.settings.isStickyBottomClass );
 				manager.stickyElement.classList.add( manager.settings.isEndPositionClass );
 			}
@@ -308,7 +313,7 @@
 	/**
 	 * Loop function to changes visibility of the variation switcher.
 	 */
-	var throttledChangeState = _throttle( maybeChangeState, 50 );
+	var throttledChangeState;
 	var loop = function() {
 		throttledChangeState();
 		// Loop this function indefinitely
@@ -473,7 +478,7 @@
 
 		// Initialize resize observer
 		if ( window.ResizeObserver ) {
-			_resizeObserver = new ResizeObserver( _debounce( resetStickyLimitsOnResize, 50 ) );
+			_resizeObserver = new ResizeObserver( _debounce( resetStickyLimitsOnResize, _settings.refreshRate ) );
 		}
 
 		// Initialize each sticky element
@@ -483,6 +488,7 @@
 		}
 
 		// Start handling sticky states
+		throttledChangeState = _throttle( maybeChangeState, _settings.refreshRate );
 		requestAnimationFrame( loop );
 
 		_hasInitialized = true;
