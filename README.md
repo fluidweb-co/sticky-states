@@ -45,15 +45,16 @@ These are the currently accepted options with their default values, if in doubt 
 	var _defaults = {
 		elementSelector: '[data-sticky-states]',
 		innerElementSelector: '[data-sticky-states-inner]',
-		
+
 		isEndPositionClass: 'is-end-position',
 		isStickyClass: 'is-sticky',
 		isStickyTopClass: 'is-sticky--top',
 		isStickyBottomClass: 'is-sticky--bottom',
 		isActivatedClass: 'is-activated',
-		
+
 		positionAttribute: 'data-sticky-position',
 		thresholdAttribute: 'data-sticky-threshold',
+		stickyRelativeToAttribute: 'data-sticky-relative-to',
 		staticAtEndAttribute: 'data-sticky-static-at-end',
 		containerAttribute: 'data-sticky-container',
 
@@ -152,12 +153,6 @@ Sticky at the `bottom`;
 
 ### 3. Setting the sticky element to stay at its original position, works only for sticky elements positioned at the `bottom`
 
-<!-- positionAttribute: 'data-sticky-position',
-thresholdAttribute: 'data-sticky-threshold',
-staticAtEndAttribute: 'data-sticky-static-at-end',
-containerAttribute: 'data-sticky-container', -->
-
-
 ```html
 <div data-sticky-states data-sticky-position="bottom" data-sticky-threshold="0" data-sticky-static-at-end>
 	<div data-sticky-states-inner>
@@ -167,6 +162,27 @@ containerAttribute: 'data-sticky-container', -->
 ```
 
 
+### 4. Setting the sticky element threshold position relative to another sticky element
+
+Single CSS selector:
+
+```html
+<div data-sticky-states data-sticky-states data-sticky-relative-to="#relative-sticky">
+	<div data-sticky-states-inner>
+		<!-- CONTENT -->
+	</div>
+</div>
+```
+
+Multiple CSS selector for different viewport width breakpoints:
+
+```html
+<div data-sticky-states data-sticky-states data-sticky-relative-to='{ "xs": { "breakpointInitial": 0, "breakpointFinal": 1023, "selector": ".site-header" }, "sm": { "breakpointInitial": 1024, "breakpointFinal": 100000, "selector": ".col-full-nav" } }'>
+	<div data-sticky-states-inner>
+		<!-- CONTENT -->
+	</div>
+</div>
+```
 
 
 ## Contributing to Development
