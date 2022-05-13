@@ -39,6 +39,8 @@
 
 		position: 'top', // Accepted values: `top`, `bottom`
 		threshold: 0,
+
+		refreshRate: 50,
 	};
 	var _resizeObserver;
 
@@ -276,10 +278,10 @@
 			// Sticky
 			if ( isSticky && ! isEndThreshold ) {
 				var stickyWidth = window.getComputedStyle( manager.innerElement ).width;
-				var containerHeight = window.getComputedStyle( manager.stickyElement ).height;
+				var stickyHeight = window.getComputedStyle( manager.stickyElement ).height;
 				manager.innerElement.style.top = relativeHeight > 0 ? relativeHeight + 'px' : '';
 				manager.innerElement.style.width = stickyWidth; // variable already has unit `px`
-				manager.stickyElement.style.height = containerHeight; // variable already has unit `px`
+				manager.stickyElement.style.height = stickyHeight; // variable already has unit `px`
 				manager.stickyElement.style.position = '';
 				manager.stickyElement.classList.add( manager.settings.isStickyClass, ( manager.settings.position == 'top' ? manager.settings.isStickyTopClass : manager.settings.isStickyBottomClass ) );
 				manager.stickyElement.classList.remove( manager.settings.isEndPositionClass );
@@ -308,7 +310,7 @@
 	/**
 	 * Loop function to changes visibility of the variation switcher.
 	 */
-	var throttledChangeState = _throttle( maybeChangeState, 50 );
+	var throttledChangeState;
 	var loop = function() {
 		throttledChangeState();
 		// Loop this function indefinitely
@@ -473,7 +475,7 @@
 
 		// Initialize resize observer
 		if ( window.ResizeObserver ) {
-			_resizeObserver = new ResizeObserver( _debounce( resetStickyLimitsOnResize, 50 ) );
+			_resizeObserver = new ResizeObserver( _debounce( resetStickyLimitsOnResize, _settings.refreshRate ) );
 		}
 
 		// Initialize each sticky element
@@ -483,6 +485,7 @@
 		}
 
 		// Start handling sticky states
+		throttledChangeState = _throttle( maybeChangeState, _settings.refreshRate );
 		requestAnimationFrame( loop );
 
 		_hasInitialized = true;

@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## [Unreleased]
 
 - Added possibility to define multiple selectors for the relative sticky elements as a JSON object.
+- Added `refreshRate` option to determine the speed in which sticky states are refreshed.
 
 ## [1.0.7] - 2021-12-29
 
