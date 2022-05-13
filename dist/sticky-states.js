@@ -159,6 +159,17 @@
 
 
 	/**
+	 * Check if a string is a JSON object.
+	 */
+	var _isJSON = function( string ) {
+		try { JSON.parse( string ); }
+		catch ( e ) { return false; }
+		return true;
+	}
+
+
+
+	/**
 	 * Get the offset position of the element recursively adding the offset position of parent offset elements until the `stopElement` (or the `body` element).
 	 *
 	 * @param   HTMLElement  element      Element to get the offset position for.
@@ -204,6 +215,39 @@
 		// Used for elements set to sticky position by other means other than using sticky-states
 		var elementComputedPosition = window.getComputedStyle( element ).position;
 		return elementComputedPosition == 'fixed' || elementComputedPosition == 'sticky';
+	}
+
+
+
+	/**
+	 * Get the relative element to which the sticky element position will be calculated.
+	 *
+	 * @param   {string}  selectorOrJson  A string with a single CSS selector for the relative sticky element, or multiple selectors for various breakpoints as a JSON object.
+	 *
+	 * @return  {HTMLElement}             The relative sticky element, or `null` if not found.
+	 */
+	var getRelativeElement = function( selectorOrJson ) {
+		var relativeElement = null;
+		var windowWidth = window.innerWidth;
+
+		// Multiple selectors for various breakpoints
+		if ( _isJSON( selectorOrJson ) ) {
+			var breakpointSelectors = Object.entries( JSON.parse( selectorOrJson ) );
+
+			for ( var i = 0; i < breakpointSelectors.length; i++) {
+				var values = breakpointSelectors[ i ][ 1 ];
+				if ( windowWidth >= values.breakpointInitial && windowWidth <= values.breakpointFinal ) {
+					relativeElement = document.querySelector( values.selector );
+					break;
+				}
+			}
+		}
+		// Single selector
+		else {
+			relativeElement = document.querySelector( selectorOrJson );
+		}
+
+		return relativeElement;
 	}
 
 
@@ -306,10 +350,10 @@
 		}
 
 		// Maybe get relativeElement set via attribute
-		var relativeElementSelector = manager.stickyElement.getAttribute( manager.settings.stickyRelativeToAttribute );
-		if ( relativeElementSelector != null && relativeElementSelector != '' ) {
-			// Try to find the relative sticky element in the page
-			manager.relativeElement = document.querySelector( relativeElementSelector );
+		var relativeElementAttribute = manager.stickyElement.getAttribute( manager.settings.stickyRelativeToAttribute );
+		if ( relativeElementAttribute != null && relativeElementAttribute != '' ) {
+			// Get relative sticky elements in the page
+			manager.relativeElement = getRelativeElement( relativeElementAttribute );
 		}
 
 		// Use the parent element as the container element
