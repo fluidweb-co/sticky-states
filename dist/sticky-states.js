@@ -266,7 +266,7 @@
 			var containerStyles = window.getComputedStyle( manager.containerElement );
 			var stickyStyles = window.getComputedStyle( manager.stickyElement );
 			var containerHeight = parseInt( containerStyles.height.replace( 'px' ) );
-        	var stickyHeight = parseInt( stickyStyles.height.replace( 'px' ) );
+			var stickyHeight = parseInt( stickyStyles.height.replace( 'px' ) );
 			var isStickyShorterThanContainer = stickyHeight < containerHeight;
 			var isSticky = currentScrollPosition >= manager.settings.threshold;
 			var relativeHeight = 0;
