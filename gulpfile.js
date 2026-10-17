@@ -12,7 +12,7 @@ var settings = {
 // Defining requirements
 var gulp = require('gulp');
 var plumber = require('gulp-plumber');
-var sass = require('gulp-sass');
+var sass = require('gulp-sass')(require('sass'));
 var cssnano = require('gulp-cssnano');
 var rename = require('gulp-rename');
 var concat = require('gulp-concat');
@@ -21,6 +21,11 @@ var replace = require('gulp-replace');
 var autoprefixer = require('gulp-autoprefixer');
 var sourcemaps = require('gulp-sourcemaps');
 var del = require('del');
+
+var sassOptions = {
+	silenceDeprecations: [ 'legacy-js-api', 'import' ],
+	loadPaths: [ './sass' ],
+};
 
 
 
@@ -41,7 +46,7 @@ gulp.task( 'build-css', gulp.series( function( done ) {
 	return gulp.src( settings.scssSources )
 		.pipe(plumber())
 		// no sourcemaps
-		.pipe(sass())
+		.pipe(sass.sync( sassOptions ))
 		.pipe(autoprefixer({ cascade: false }))
 		.pipe(gulp.dest('./dist/')) // save .css
 		.pipe(cssnano( { zindex:false, discardComments: {removeAll: true}, discardUnused: {fontFace: false}, reduceIdents: {keyframes: false} } ) )
