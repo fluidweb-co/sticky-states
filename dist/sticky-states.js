@@ -282,7 +282,7 @@
 
 			// Sticky
 			if ( isSticky && isStickyShorterThanContainer && ! isEndThreshold ) {
-				var stickyInnerWidth = window.getComputedStyle( manager.innerElement ).width;
+				var stickyInnerWidth = stickyStyles.width; // Width of the sticky element, which keeps following the layout while the inner element is fixed or absolute
 				manager.innerElement.style.top = relativeHeight > 0 ? relativeHeight + 'px' : '';
 				manager.innerElement.style.width = stickyInnerWidth; // variable already has unit `px`
 				manager.stickyElement.style.height = stickyHeight + 'px';
@@ -294,6 +294,7 @@
 			else if ( isEndThreshold && isStickyShorterThanContainer && ! isStaticAtEnd ) {
 				var elementOffsetToContainer = getOffsetTop( manager.stickyElement ) - getOffsetTop( manager.containerElement );
 				manager.innerElement.style.top = ( containerHeight - stickyHeight - elementOffsetToContainer ) + 'px';
+				manager.innerElement.style.width = stickyStyles.width;
 				manager.stickyElement.style.height = stickyHeight + 'px';
 				manager.stickyElement.classList.remove( manager.settings.isStickyClass, manager.settings.isStickyTopClass, manager.settings.isStickyBottomClass );
 				manager.stickyElement.classList.add( manager.settings.isEndPositionClass );
